@@ -51,26 +51,48 @@ public static final Semaphore cpuSemaphore = new Semaphore(1);
     public static void incrementContextSwitch() {
         // TODO: Protect this critical section with a lock
         // RACE CONDITION: Multiple threads might read and write simultaneously!
-        contextSwitchCount++;
+        lock.lock(); // Protecting contextSwitchCount from race condition using lock
+try {
+    contextSwitchCount++;
+} finally {
+    lock.unlock();
+}
     }
     
     // Method to increment completed process counter
     public static void incrementCompletedProcess() {
         // TODO: Protect this critical section with a lock
+        
+    lock.lock(); // Protecting completedProcessCount from concurrent access
+    try {
         completedProcessCount++;
+    } finally {
+        lock.unlock();
     }
+}
+    
     
     // Method to add waiting time
     public static void addWaitingTime(long time) {
         // TODO: Protect this critical section with a lock
+         lock.lock(); // Protecting totalWaitingTime from race condition
+    try {
         totalWaitingTime += time;
+    } finally {
+        lock.unlock();
+    }
     }
     
     // Method to log execution
     public static void logExecution(String message) {
         // TODO: Protect this critical section with a lock
         // RACE CONDITION: ArrayList is not thread-safe!
+        lock.lock(); // Protecting executionLog (ArrayList is not thread-safe)
+    try {
         executionLog.add(message);
+    } finally {
+        lock.unlock();
+    }
     }
 }
 
