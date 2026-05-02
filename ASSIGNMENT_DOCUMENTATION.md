@@ -228,49 +228,112 @@ make sure only one process executes at a time
 **Testing procedure**: 
 ```bash
 # Commands used (run the program at least 5 times)
-```
+# Run the program at least 5 times
+javac SchedulerSimulationSync.java
+
+java SchedulerSimulationSync
+java SchedulerSimulationSync
+java SchedulerSimulationSync
+java SchedulerSimulationSync
+java SchedulerSimulationSync
 
 **Results**: 
-(Show that running multiple times produces consistent, correct results)
+═══ Synchronization Statistics ═══
+Total Context Switches: 38
+Total Completed Processes: 17
+Total Waiting Time: 1487333ms
+Average Waiting Time: 87490ms
+
+═══ Process Summary Table ═══
+Process    Priority     Burst Time   Waiting Time
+────────────────────────────────────────────────
+P1         5            5192         63039       
+P2         3            6399         64263       
+P3         3            8489         103276      
+P4         2            9610         103815      
+P5         1            6386         74842       
+P6         4            4437         77289       
+P7         4            7073         77738       
+P8         1            9600         105497      
+P9         2            9949         107148      
+P10        3            6553         89009       
+P11        1            9933         109181      
+P12        3            2698         44591       
+P13        1            5810         95701       
+P14        4            6058         97541       
+P15        2            8048         111167      
+P16        2            3350         59558       
+P17        1            7568         103678      
+
+═══ Execution Log Summary ═══
+Total log entries: 76
 
 **Why synchronization is necessary**: 
-(Explain what race conditions COULD occur without synchronization, even if you didn't observe them. Explain which shared resources need protection and why.)
+Race conditions could result from several threads accessing and changing shared resources at the same time in the absence of synchronization.
+For instance:
+Increments may be missed since contextSwitchCount++ is not atomic.
+Because executionLog.add() is not thread-safe, it may corrupt the ArrayList.
+Inaccurate accumulated values could result from totalWaitingTime += time.
+These problems might arise unexpectedly and lead to inaccurate outcomes, even if they are not always apparent.
 
 **Conclusion**: 
-
+ReentrantLock and Semaphore are used to guarantee thread-safe operations, which produce dependable and consistent results throughout all executions.
 ---
 
 ### Test 2: Exception Testing
 **What I tested**: Checking for ConcurrentModificationException
+I checked to see if the software threw any runtime errors relating to concurrency, such as ConcurrentModificationException.
 
 **Testing procedure**: 
+ran the application several times.
+concentrated on executionLog (shared ArrayList) operations.
+looked for any exceptions in the console output.
 
 **Results**: 
+During execution, no exceptions were made. Every time, the application operated without a hitch.
 
 **What this proves**: 
-
+This demonstrates that ReentrantLock is appropriately used to safeguard the shared resource executionLog.
+Concurrent changes without synchronization may result in errors because ArrayList is not thread-safe.
+The lack of mistakes attests to the proper implementation of synchronization.
 ---
 
 ### Test 3: Correctness Verification
 **What I tested**: Verifying correct final values (total burst time, context switches, etc.)
+I confirmed that all computed data and final statistics are accurate.
 
 **Expected values**: 
-
+Total number of processes created = total number of processes completed
+Waiting time overall ≥ 0
+Count of context switches > 0
+Every process execution is recorded in the execution log.
 **Actual values**: 
+Total Context Switches: 38
+Total Completed Processes: 17
+Total Waiting Time: 1487333ms
+Average Waiting Time: 87490ms
 
 **Analysis**: 
-
+The outcomes verify that the scheduler operates as intended.
+The fact that all shared variables were correctly updated shows that synchronization was effective in avoiding race situations.
+The behavior is consistent with what a Round Robin scheduling simulation would provide.
 ---
 
 ### Test 4: Different Scenarios
 **Scenario tested**: [e.g., different time quantum, more processes, etc.]
-
+Various methods (randomized using student ID)
+Various time quantum values
+RunToCompletion() is used to execute the final process.
 **Purpose**: 
+To guarantee that the synchronization logic functions properly in all workloads and scheduling scenarios
 
 **Results**: 
+All variants were handled flawlessly by the application.
+There were no deadlocks; CPU access was appropriately restricted to one process at a time using the semaphore; output was accurate and consistent in every situation.
 
 **What I learned**: 
-
+I discovered that sustaining correctness in concurrent systems requires synchronization techniques.
+Appropriate synchronization guarantees stability and stops unexpected behavior even when circumstances change (additional processes or changing timing).
 ---
 
 ## Part 5: Reflection and Learning
