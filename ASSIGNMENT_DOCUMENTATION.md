@@ -1,7 +1,7 @@
 # Assignment 3 - Complete Documentation
 
-**Student Name**: [Your Full Name]  
-**Student ID**: [Your ID]  
+**Student Name**: [Rwaida Farhan]  
+**Student ID**: [445052062]  
 **Date Submitted**: [Submission Date]
 
 ---
@@ -31,69 +31,70 @@
 
 Document your development process with **minimum 3 entries** showing progression:
 
-### Entry 1 - [Date, Time]
-**What I implemented**: 
+### Entry 1 - [1 May, 6:00 AM]
+**What I implemented**:
+ I found shared resources that need to be synchronized after analyzing the code.
 
 **Challenges encountered**: 
-
+Recognizing potential racial situations
 **How I solved it**: 
-
+I looked over common variables and noted important passages.
 **Testing approach**: 
-
+To examine behavior, the software was run without synchronization.
 **Time spent**: 
-
+1.5 hours
 ---
 
-### Entry 2 - [Date, Time]
+### Entry 2 - [1 May, 9:10 AM]
 **What I implemented**: 
-
+ReentrantLock was added to safeguard the execution log and shared counters.
 **Challenges encountered**: 
-
+Making sure locks are always unlocked
 **How I solved it**: 
-
+Used try-finally blocks
 **Testing approach**: 
-
+After execution, the right counter values were verified.
 **Time spent**: 
-
+2 hours
 ---
 
-### Entry 3 - [Date, Time]
+### Entry 3 - [1 May, 12:30 PM]
 **What I implemented**: 
-
+Semaphore was included to regulate CPU access.
 **Challenges encountered**: 
-
+Managing the InterruptedException
 **How I solved it**: 
-
+Try-catch wrapped acquire()
 **Testing approach**: 
-
+Verified only one process runs at a time
 **Time spent**: 
-
+1.5 hours
 ---
 
-### Entry 4 - [Date, Time]
+### Entry 4 - [1 May, 5:30 PM]
 **What I implemented**: 
-
+RunToCompletion() synchronization has been fixed.
 **Challenges encountered**: 
-
+Try-catch structure that is nested
 **How I solved it**: 
-
+Correctly reorganized code
 **Testing approach**: 
-
+Last process execution was tested.
 **Time spent**: 
-
+2.5 hours
 ---
 
-### Entry 5 - [Date, Time]
+### Entry 5 - [1 May, 10:30 PM]
 **What I implemented**: 
-
+Final verification and testing
 **Challenges encountered**: 
-
+Maintaining uniformity
 **How I solved it**: 
-
+Ran program multiple times
 **Testing approach**: 
-
+Confirmed counters and logs
 **Time spent**: 
-
+1 hour
 ---
 
 ## Part 2: Technical Questions (1 mark)
@@ -106,8 +107,9 @@ Document your development process with **minimum 3 entries** showing progression
 
 **Your Answer**:
 
-[Your answer here - 4-6 sentences with code examples]
-
+When several threads access shared data at the same time, a race condition arises.
+ContextSwitchCount is the first example. It is incremented by many threads, which could result in inaccurate values.
+ExecutionLog is the second example. Concurrent access could harm data since ArrayList is not thread-safe.
 ---
 
 ### Question 2: Locks vs Semaphores
@@ -115,7 +117,8 @@ Document your development process with **minimum 3 entries** showing progression
 
 **Your Answer**:
 
-[Your answer here - explain your implementation choices]
+ReentrantLock only permits one thread at a time and offers mutual exclusion.
+I utilized ReentrantLock for counters and Semaphore for CPU control. Semaphore regulates the number of threads that can access a resource.
 
 ---
 
@@ -124,7 +127,12 @@ Document your development process with **minimum 3 entries** showing progression
 
 **Your Answer**:
 
-[Your answer here - reference try-finally blocks, lock ordering, etc.]
+When threads wait indefinitely, it's called deadlock.
+
+Avoidance:
+To release locks, use try-finally
+Steer clear of nested locks
+I used to eventually release locks and semaphores in my code.
 
 ---
 
@@ -137,7 +145,7 @@ Document your development process with **minimum 3 entries** showing progression
 
 **Your Answer**:
 
-[Your answer here - explain coarse-grained vs fine-grained locking, independence of counters, concurrency implications. Show understanding of when to use each approach. 5-8 sentences expected.]
+
 
 ---
 
