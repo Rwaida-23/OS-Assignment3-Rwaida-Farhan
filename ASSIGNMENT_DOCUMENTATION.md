@@ -160,52 +160,64 @@ More complexity but improved performance are possible with fine-grained
 ### Critical Section #1: Counter Variables
 
 **Which variables**: 
-
+contextSwitchCount, completedprocessCount, totalWaitingTime
 **Why they need protection**: 
-
+they are shared among threads
 **Synchronization mechanism used**: 
-
+ReentrantLock
 **Code snippet**:
 ```java
 // Paste your implementation here
-```
+```lock.lock();
+try {
+    contextSwitchCount++;
+} finally {
+    lock.unlock();
+}
 
 **Justification**: 
-
+Ensures mutual exclusion and prevents race conditions
 ---
 
 ### Critical Section #2: Execution Log
 
 **What resource**: 
-
+executionLog
 **Why it needs protection**: 
-
+ArrayList not thread-safe
 **Synchronization mechanism used**: 
-
+Lock
 **Code snippet**:
 ```java
 // Paste your implementation here
-```
+```lock.lock();
+try {
+    executionLog.add(message);
+} finally {
+    lock.unlock();
+}
 
 **Justification**: 
-
+prevents data corruption and exceptions
 ---
 
 ### Critical Section #3: CPU Semaphore
 
 **Purpose of semaphore**: 
-
+control CPU access
 **Number of permits and why**: 
-
+single CPU 1
 **Where implemented**: 
-
+inside run() method
 **Code snippet**:
 ```java
 // Paste your implementation here
-```
+```cpuSemaphore.acquire();
+...
+cpuSemaphore.release();
 
 **Effect on program behavior**: 
-
+make sure only one process executes at a time
 ---
 
 ## Part 4: Testing and Verification (2 marks)
