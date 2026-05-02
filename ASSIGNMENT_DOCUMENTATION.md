@@ -145,7 +145,13 @@ I used to eventually release locks and semaphores in my code.
 
 **Your Answer**:
 
+I utilized a single coarse-grained lock.
+It makes implementation easier.
 
+Trade-off
+Reduced concurrency
+Increased security
+More complexity but improved performance are possible with fine-grained
 
 ---
 
